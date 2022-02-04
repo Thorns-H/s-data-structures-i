@@ -5,7 +5,7 @@
 /*
     - Seminario de Estructura de Datos I
     - Abraham Magaña Hernández - 220791217
-    - Clase del 21-01-2021 
+    - Clase del 21-01-2022 
 */
 
 // $ g++ 21-01-2021.cpp && ./a.out && rm a.out
