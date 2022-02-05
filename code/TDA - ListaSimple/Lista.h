@@ -10,12 +10,16 @@ class Lista{
         void MostrarTodo();
         // Métodos Personalizados del Objeto
         void Insertar(Alumno);
+        void InsertarFinal(Alumno);
+        void InsertarPosicion(Alumno, int);
         void Eliminar(string);
-        int Buscar(string);
+        Alumno Buscar(string);
         Alumno Primero();
         Alumno Ultimo();
         Alumno Siguente(string);
         Alumno Anterior(string);
+        // Helpers Personales (Validaciones)
+        bool Existe(string);
     private:
         Nodo *raiz;
 };
@@ -59,8 +63,10 @@ void Lista::MostrarTodo(){
     aux = raiz;
     int i = 1;
 
+    std::cout << std::endl;
+
     while(aux){
-        std::cout << "[" << i << "] - Alumno: " << aux->Persona.getNombre() << ", Edad: " << aux->Persona.getEdad() << std::endl; 
+        std::cout << "\t[" << i << "] - Alumno: " << aux->Persona.getNombre() << ", Edad: " << aux->Persona.getEdad() << std::endl; 
         i++;
         aux = aux->siguente;
     }
@@ -77,6 +83,54 @@ void Lista::Insertar(Alumno Persona){
     }else{
         aux->siguente = raiz;
         raiz = aux;
+    }
+}
+
+void Lista::InsertarFinal(Alumno Persona){
+
+    Nodo *tmp = new Nodo;
+    tmp->Persona = Persona;
+    tmp->siguente = nullptr;
+
+    if(Vacia()){
+        raiz = tmp;
+    }else{
+        Nodo *aux;
+        aux = raiz;
+        while(aux->siguente){
+            aux = aux->siguente;    
+        }
+        aux->siguente = tmp;
+    }
+}
+
+void Lista::InsertarPosicion(Alumno Persona, int pos){
+
+    Nodo *tmp = new Nodo;
+    tmp->Persona = Persona;
+    tmp->siguente = nullptr;
+
+    if(Vacia()){
+        raiz = tmp;
+    }else{
+        if(pos == 0){
+            Insertar(Persona);
+        }else{
+            if(pos == Tamanio()){
+            InsertarFinal(Persona);
+        }else{
+            Nodo *aux, *aux2;
+            aux = raiz;
+
+            for(int i = 0; i < pos; i++){
+                aux2 = aux;
+                aux= aux->siguente;
+            }
+
+            aux2->siguente = tmp;
+            tmp->siguente = aux;
+            }   
+        }
     }
 }
 
@@ -97,17 +151,19 @@ void Lista::Eliminar(string Nombre){
         delete aux;
 }
 
-int Lista::Buscar(string Nombre){
+Alumno Lista::Buscar(string Nombre){
+
     Nodo *aux;
     aux = raiz;
-    int i = 1;
-
-    while(Nombre != aux->Persona.getNombre()){
-        aux = aux->siguente;
-        i++;
-    }
-    if(Nombre == aux->Persona.getNombre()){
-        return i;
+    
+    if(!Vacia()){
+        while(aux){
+            if(aux->Persona.getNombre() == Nombre){
+                return aux->Persona;
+            }else{
+                aux = aux->siguente;
+            }
+        }
     }
 }
 
@@ -150,4 +206,18 @@ Alumno Lista::Anterior(string Nombre){
         aux = aux->siguente;
     }
     return aux->Persona;
+}
+
+bool Lista::Existe(string Nombre){
+    Nodo *aux = raiz;
+    
+    if(Vacia()){
+        return false;
+    }else{
+        while(aux){
+            if(aux->Persona.getNombre() == Nombre){ return true; }
+            else{ aux = aux->siguente; }
+        }
+        return false;
+    }
 }
