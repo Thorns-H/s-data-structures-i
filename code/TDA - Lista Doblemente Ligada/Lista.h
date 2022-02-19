@@ -4,15 +4,15 @@ class Lista{
     public:
         Lista(){};
         void Inicializar();
-        bool Vacia();
+        bool Vacia(); //
         bool Existe(string);
-        int Tamanio();
-        void Imprimir();
-        void ImprimirInvertido();
-        void InsertarInicio(Alumno);
-        void InsertarFinal(Alumno);
-        void InsertarPosicion(Alumno, int);
-        void Eliminar(string);
+        int Tamanio(); //
+        void Imprimir(); //
+        void ImprimirInvertido(); //
+        void InsertarInicio(Alumno); //
+        void InsertarFinal(Alumno); //
+        void InsertarPosicion(Alumno, int); //
+        void Eliminar(string); //
         void Anular();
         Nodo *Primero();
         Nodo *Ultimo();
@@ -245,7 +245,7 @@ void Lista::Imprimir(){
     int index = 1;
 
     if(Vacia()){
-        std::cout << "¡NO hay elementos para mostrar, la lista esta vacia!";
+        std::cout << "  ¡NO hay elementos para mostrar, la lista esta vacia!\n";
     }else{
         while(aux){
             std::cout << "\t\t[" << index << "] - " << aux->Persona.getNombre()+", " << aux->Persona.getEdad() << " años." << std::endl;

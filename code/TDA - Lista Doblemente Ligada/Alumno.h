@@ -1,5 +1,17 @@
 #include <iostream>
 
+#ifdef _WIN32 // Declarando constantes de Windows
+
+#define clear "cls"
+#define pause "PAUSE"
+
+#else // Declarando constantes de Linux
+
+#define clear "clear"
+#define pause "read -p '' var"
+
+#endif
+
 using std::string;
 
 class Alumno{
