@@ -45,17 +45,15 @@ int main(){
     // Pointers();
     // TacoExample();
 
-    List myList;
-    myList.Initial();
+    List myList; myList.Initial();
 
-    myList.Insert(10);
-    myList.Insert(20);
-    myList.Insert(15);
+    myList.InsertLast(10);
+    myList.InsertLast(20);
+    myList.InsertLast(15);
 
     myList.PrintIn();
 
-    myList.Delete(0);
-
+    myList.Delete(15);
     myList.PrintIn();
     
     return 0;

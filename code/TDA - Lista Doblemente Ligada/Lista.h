@@ -138,26 +138,20 @@ void Lista::Eliminar(string nombre){
         }
 
         if(aux == cabecera and aux != cola){ // Si es el header
-            std::cout << "Si es el header" << std::endl;
             cabecera = aux->siguiente;
             cabecera->anterior = nullptr;
             delete aux;
         }else if(aux == cabecera and aux == cola){ // Si solo hay un elemento
-            std::cout << "Si es el unico" << std::endl;
             cabecera = nullptr;
             cola = nullptr;
             delete aux;
         }else if(aux == cola and aux != cabecera){ // Si es el ultimo
-            std::cout << "Si es la tail" << std::endl;
             cola = aux->anterior;
             cola->siguiente = nullptr;
             delete aux;
         }else{ // Si esta en medio
-            std::cout << "Si esta en medio" << std::endl;
-            Nodo *anterior = aux->anterior;
-            Nodo *siguiente = aux->siguiente;
-            anterior->siguiente = aux->siguiente;
-            siguiente->anterior = aux->anterior;
+            aux->anterior->siguiente = aux->siguiente;
+            aux->siguiente->anterior = aux->anterior;
             delete aux;
         }
     }
