@@ -103,18 +103,18 @@ int main(){
             system(pause); break; 
         case 10:
             std::cout << "\n\t- Nombre del Alumno: "; std::cin >> nombre; 
-            if(MiLista.Existe(nombre)){
+            if(MiLista.Existe(nombre) && MiLista.Ultimo().getNombre() != nombre){
                 std::cout << "\n\t¡El Alumno Siguente a "<< nombre << " es " << MiLista.Siguente(nombre).getNombre()+"!" << std::endl; 
             }else{
-                std::cout << "\n\t¡El Alumno no existe en la Lista!" << std::endl;
+                std::cout << "\n\t¡El Alumno no existe en la Lista o es el último!" << std::endl;
             }
             system(pause); break;
         case 11:
             std::cout << "\n\t- Nombre del Alumno: "; std::cin >> nombre;
-            if(MiLista.Existe(nombre)){
+            if(MiLista.Existe(nombre) && MiLista.Primero().getNombre() != nombre){
                 std::cout << "\n\t¡El Alumno Anterior a "<< nombre << " es " << MiLista.Anterior(nombre).getNombre()+"!" << std::endl;
             }else{
-                std::cout << "\n\t¡El Alumno no existe en la Lista!" << std::endl;
+                std::cout << "\n\t¡El Alumno no existe en la o es el primero!" << std::endl;
             }
             system(pause); break;
         case 12:

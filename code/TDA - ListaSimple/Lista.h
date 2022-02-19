@@ -34,7 +34,7 @@ void Lista::EliminarTodo(){
     while(aux){
         aux = raiz;
         raiz = nullptr;
-        delete(aux);
+        delete aux;
     }
 }
 
@@ -45,17 +45,15 @@ bool Lista::Vacia(){
 
 int Lista::Tamanio(){
 
-    Nodo *aux;
-    aux = raiz;
-    int i = 1;
+    Nodo *aux = raiz;
+    int i = 0;
 
     if(Vacia()){return 0;}
-
     while(aux){
         i++;
         aux = aux->siguente;
     }
-    return i-1;  
+    return i;  
 }
 
 void Lista::MostrarTodo(){
@@ -168,7 +166,7 @@ Alumno Lista::Buscar(string Nombre){
 }
 
 Alumno Lista::Primero(){
-    if(raiz){
+    if(this->raiz){
         return raiz->Persona;
     }
 }
