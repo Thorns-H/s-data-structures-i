@@ -8,18 +8,17 @@ class Lista{
         bool Existe(string);
         int Tamanio();
         void Imprimir();
+        void ImprimirInvertido();
         void InsertarInicio(Alumno);
         void InsertarFinal(Alumno);
         void InsertarPosicion(Alumno, int);
         void Eliminar(string);
-
         void Anular();
-
-        Nodo *Buscar(string);
         Nodo *Primero();
         Nodo *Ultimo();
-        Nodo *Siguiente();
-        Nodo *Anterior();
+        Nodo *Buscar(string);
+        Nodo *Siguiente(string);
+        Nodo *Anterior(string);
     private:
         Nodo *cabecera;
         Nodo *cola;
@@ -157,17 +156,92 @@ void Lista::Eliminar(string nombre){
     }
 }
 
+void Lista::Anular(){
+    
+    if(!Vacia()){
+        while(Tamanio() > 0){
+            Eliminar(Primero()->Persona.getNombre());
+        }
+    }
+}
+
 Nodo* Lista::Primero(){
 
     if(!Vacia()){
-        return cabecera;
+        return this->cabecera;
     }
+    return nullptr;
+}
 
+Nodo* Lista::Ultimo(){
+
+    if(!Vacia()){
+        return this->cola;
+    }
+    return nullptr;
+}
+
+Nodo* Lista::Buscar(string nombre){
+
+    Nodo *aux = this->cabecera;
+
+    if(!Vacia() and Existe(nombre)){
+        while(aux){
+            if(nombre == aux->Persona.getNombre()){
+                return aux;
+            }else{
+                aux = aux->siguiente;
+            }
+        }
+    }
+    return nullptr;
+}
+
+Nodo* Lista::Siguiente(string nombre){
+
+    Nodo *aux = this->cabecera;
+
+    if(!Vacia() and Existe(nombre)){
+        while(aux){
+            if(nombre == aux->Persona.getNombre()){
+                if(aux->siguiente){
+                    return aux->siguiente;
+                }else{
+                    return nullptr;
+                }
+            }else{
+                aux = aux->siguiente;
+            }
+        }
+        return nullptr;
+    }
+    return nullptr;
+}
+
+Nodo* Lista::Anterior(string nombre){
+
+    Nodo *aux = this->cabecera;
+
+    if(!Vacia() and Existe(nombre)){
+        while(aux){
+            if(nombre == aux->Persona.getNombre()){
+                if(aux->anterior){
+                    return aux->anterior;
+                }else{
+                    return nullptr;
+                }
+            }else{
+                aux = aux->siguiente;
+            }
+        }
+        return nullptr;
+    }
+    return nullptr;
 }
 
 void Lista::Imprimir(){
 
-    Nodo *aux = this->cola;
+    Nodo *aux = this->cabecera;
     int index = 1;
 
     if(Vacia()){
@@ -175,9 +249,24 @@ void Lista::Imprimir(){
     }else{
         while(aux){
             std::cout << "\t\t[" << index << "] - " << aux->Persona.getNombre()+", " << aux->Persona.getEdad() << " años." << std::endl;
-            aux = aux->anterior;
+            aux = aux->siguiente;
             index++;
         }
     }
 }
 
+void Lista::ImprimirInvertido(){
+
+    Nodo *aux = this->cola;
+    int index = Tamanio();
+
+    if(Vacia()){
+        std::cout << "¡NO hay elementos para mostrar, la lista esta vacia!";
+    }else{
+        while(aux){
+            std::cout << "\t\t[" << index << "] - " << aux->Persona.getNombre()+", " << aux->Persona.getEdad() << " años." << std::endl;
+            aux = aux->anterior;
+            index--;
+        }
+    }
+}
