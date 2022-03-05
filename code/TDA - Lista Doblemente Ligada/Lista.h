@@ -4,25 +4,50 @@ class Lista{
     public:
         Lista(){};
         void Inicializar();
-        bool Vacia(); //
-        bool Existe(string);
-        int Tamanio(); //
-        void Imprimir(); //
-        void ImprimirInvertido(); //
-        void InsertarInicio(Alumno); //
-        void InsertarFinal(Alumno); //
-        void InsertarPosicion(Alumno, int); //
-        void Eliminar(string); //
+        bool Vacia();
+        bool Existe(string); 
+        int Tamanio();
+        void Imprimir();
+        void ImprimirInvertido(); 
+        void InsertarInicio(Alumno);
+        void InsertarFinal(Alumno); 
+        void InsertarPosicion(Alumno, int); 
+        void Eliminar(string);
         void Anular();
         Nodo *Primero();
         Nodo *Ultimo();
         Nodo *Buscar(string);
         Nodo *Siguiente(string);
         Nodo *Anterior(string);
+        // Experimental
+        void BubbleSort(); // Using flag 
     private:
         Nodo *cabecera;
         Nodo *cola;
 };
+
+void Lista::BubbleSort(){
+
+    Nodo *aux = this->cabecera;
+    Alumno tmp;
+    bool swapped;
+
+    if(!Vacia()){
+        for (int i = 0; i < Tamanio() - 1; i++){
+            swapped = false;
+            for (int j = 0; j < Tamanio() - i - 1; j++){
+                if(aux->Persona.getEdad() > aux->siguiente->Persona.getEdad()){
+                    tmp = aux->Persona;
+                    aux->Persona = aux->siguiente->Persona;
+                    aux->siguiente->Persona = tmp;
+                    swapped = true;
+                }
+            }
+            if(!swapped){break;}
+            else{aux = aux->siguiente;}
+        }
+    }
+}
 
 void Lista::Inicializar(){
     this->cabecera = nullptr;
@@ -39,21 +64,20 @@ bool Lista::Vacia(){
 
 int Lista::Tamanio(){
 
-    Nodo *aux = cabecera;
+    Nodo *aux = this->cabecera;
     int tamanio = 0;
 
     while(aux){
         aux = aux->siguiente;
         tamanio++;
     }
-
     return tamanio;
 }
 
 bool Lista::Existe(string nombre){
-    
+
     Nodo *aux = this->cabecera;
-    
+
     if(!Vacia()){
         while(aux){
             if(nombre == aux->Persona.getNombre()){
@@ -66,7 +90,7 @@ bool Lista::Existe(string nombre){
 }
 
 void Lista::InsertarInicio(Alumno Persona){
-   
+
     Nodo *tmp = new Nodo;
     tmp->Persona = Persona;
 
@@ -81,7 +105,7 @@ void Lista::InsertarInicio(Alumno Persona){
 }
 
 void Lista::InsertarFinal(Alumno Persona){
-    
+
     Nodo *tmp = new Nodo;
     tmp->Persona = Persona;
 
@@ -107,20 +131,25 @@ void Lista::InsertarPosicion(Alumno Persona, int Posicion){
         InsertarFinal(Persona);
         delete tmp;
     }else{
-        Nodo *aux = this->cabecera;
+        if(!Posicion > Tamanio()){
+            Nodo *aux = this->cabecera;
 
-        for(int i = 0; i < Posicion; i++){
-            aux = aux->siguiente;
+            for(int i = 0; i < Posicion; i++){
+                aux = aux->siguiente;
+            }
+
+            aux->anterior->siguiente = tmp;
+            tmp->siguiente = aux;
+            tmp->anterior = aux->anterior;
+            aux->anterior = tmp;
+        }else{
+            InsertarFinal(Persona);
+            delete tmp;
         }
-        aux->anterior->siguiente = tmp;
-        tmp->siguiente = aux;
-        tmp->anterior = aux->anterior;
-        aux->anterior = tmp;
     }
 }
 
 void Lista::Eliminar(string nombre){
-
     if(Vacia()){
         std::cout << "¡NO hay valores para eliminar!" << std::endl;
     }else if(Existe(nombre)){
@@ -128,7 +157,7 @@ void Lista::Eliminar(string nombre){
         Nodo *aux = this->cabecera;
         bool not_found = true;
 
-        while(aux and not_found){ 
+        while(aux and not_found){
             if(nombre == aux->Persona.getNombre()){
                 not_found = false;
             }else{
@@ -136,19 +165,19 @@ void Lista::Eliminar(string nombre){
             }
         }
 
-        if(aux == cabecera and aux != cola){ // Si es el header
+        if(aux == cabecera and aux != cola){
             cabecera = aux->siguiente;
             cabecera->anterior = nullptr;
             delete aux;
-        }else if(aux == cabecera and aux == cola){ // Si solo hay un elemento
+        }else if(aux == cabecera and aux == cola){
             cabecera = nullptr;
             cola = nullptr;
             delete aux;
-        }else if(aux == cola and aux != cabecera){ // Si es el ultimo
+        }else if(aux == cola and aux != cabecera){
             cola = aux->anterior;
             cola->siguiente = nullptr;
             delete aux;
-        }else{ // Si esta en medio
+        }else{
             aux->anterior->siguiente = aux->siguiente;
             aux->siguiente->anterior = aux->anterior;
             delete aux;
@@ -157,7 +186,7 @@ void Lista::Eliminar(string nombre){
 }
 
 void Lista::Anular(){
-    
+
     if(!Vacia()){
         while(Tamanio() > 0){
             Eliminar(Primero()->Persona.getNombre());
@@ -261,7 +290,7 @@ void Lista::ImprimirInvertido(){
     int index = Tamanio();
 
     if(Vacia()){
-        std::cout << "¡NO hay elementos para mostrar, la lista esta vacia!";
+        std::cout << "  ¡NO hay elementos para mostrar, la lista esta vacia!";
     }else{
         while(aux){
             std::cout << "\t\t[" << index << "] - " << aux->Persona.getNombre()+", " << aux->Persona.getEdad() << " años." << std::endl;

@@ -1,5 +1,17 @@
 #include "Lista.h"
 
+#ifdef _WIN32 // Declarando constantes de Windows
+
+#define clear "cls"
+#define pause "PAUSE"
+
+#else // Declarando constantes de Linux
+
+#define clear "clear"
+#define pause "read -p '' var"
+
+#endif
+
 int main(){
 
     Lista miLista;
@@ -32,7 +44,8 @@ int main(){
             std::cout << "\t\t     [9] - Buscar" << std::endl;
             std::cout << "\t\t     [10] - Siguiente" << std::endl;
             std::cout << "\t\t     [11] - Anterior" << std::endl;
-            std::cout << "\t\t     [12] - Salir" << std::endl;
+            std::cout << "\t\t     [12] - Ordenamiento" << std::endl;
+            std::cout << "\t\t     [13] - Salir" << std::endl;
 
         }
         std::cout << "\n\t\t     Selección -> "; std::cin >> opc;
@@ -80,8 +93,15 @@ int main(){
                 std::cout << "\n\t\t - Nombre del Alumno: "; std::cin >> nombre;
                 std::cout << "\t\t - Edad del Alumno: "; std::cin >> edad;
                 std::cout << "\t\t - Posición a Insertar: "; std::cin >> pos;
+
+                if(pos - 1 > miLista.Tamanio()){
+                    std::cout << "\n\t\t¡La posición es mayor al tamaño de la lista!" << std::endl;
+                    std::cout << "\t\t  ¡Insertando el dato al final de la lista!" << std::endl;
+                    system(pause);
+                }
+
                 Alumno Nuevo(nombre,edad);
-                miLista.InsertarPosicion(Nuevo,pos);
+                miLista.InsertarPosicion(Nuevo,pos - 1);
             }else{
                 std::cout << "\n\t\t - Nombre del Alumno: "; std::cin >> nombre;
                 std::cout << "\t\t - Edad del Alumno: "; std::cin >> edad;
@@ -112,7 +132,7 @@ int main(){
         case 7:
             system(clear);
             if(!miLista.Vacia()){
-                std::cout << "\n\t\t¡La primera referencia es " << miLista.Primero() << "!" <<  std::endl; 
+                std::cout << "\n\t\t¡La primera referencia es " << miLista.Primero() << "!" <<  std::endl;
             }else{
                 std::cout << "\n\t\t¡La Lista esta Vacia!" << std::endl;
             }
@@ -121,7 +141,7 @@ int main(){
         case 8:
             system(clear);
             if(!miLista.Vacia()){
-                std::cout << "\n\t\t¡La ultima referencia es " << miLista.Ultimo() << "!" <<  std::endl; 
+                std::cout << "\n\t\t¡La ultima referencia es " << miLista.Ultimo() << "!" <<  std::endl;
             }else{
                 std::cout << "\n\t\t¡La Lista esta Vacia!" << std::endl;
             }
@@ -130,7 +150,7 @@ int main(){
         case 9:
             std::cout << "\n\t\t - Nombre del Alumno a Buscar: "; std::cin >> nombre;
             if(!miLista.Vacia() and miLista.Existe(nombre)){
-                std::cout << "\n\t\t¡La referencia de " << nombre << " es " << miLista.Buscar(nombre) << "!" <<  std::endl; 
+                std::cout << "\n\t\t¡La referencia de " << nombre << " es " << miLista.Buscar(nombre) << "!" <<  std::endl;
             }else{
                 if(miLista.Vacia()){
                     std::cout << "\n\t\t¡La Lista esta Vacia!" << std::endl;
@@ -144,9 +164,9 @@ int main(){
             std::cout << "\n\t\t - Nombre del Alumno a Buscar: "; std::cin >> nombre;
             if(!miLista.Vacia() and miLista.Existe(nombre)){
                 if(miLista.Siguiente(nombre)){
-                    std::cout << "\n\t\t¡La referencia siguiente es " << miLista.Siguiente(nombre) << "!" << std::endl; 
+                    std::cout << "\n\t\t¡La referencia siguiente es " << miLista.Siguiente(nombre) << "!" << std::endl;
                 }else{
-                    std::cout << "\n\t\t¡No existe referencia siguiente a "<< nombre+"!" << std::endl; 
+                    std::cout << "\n\t\t¡No existe referencia siguiente a "<< nombre+"!" << std::endl;
                 }
             }else{
                 if(miLista.Vacia()){
@@ -161,9 +181,9 @@ int main(){
             std::cout << "\n\t\t - Nombre del Alumno a Buscar: "; std::cin >> nombre;
             if(!miLista.Vacia() and miLista.Existe(nombre)){
                 if(miLista.Anterior(nombre)){
-                    std::cout << "\n\t\t¡La referencia anterior es " << miLista.Anterior(nombre) << "!" << std::endl; 
+                    std::cout << "\n\t\t¡La referencia anterior es " << miLista.Anterior(nombre) << "!" << std::endl;
                 }else{
-                    std::cout << "\n\t\t¡No existe referencia anterior a "<< nombre+"!" << std::endl; 
+                    std::cout << "\n\t\t¡No existe referencia anterior a "<< nombre+"!" << std::endl;
                 }
             }else{
                 if(miLista.Vacia()){
@@ -174,8 +194,10 @@ int main(){
             }
             system(pause);
             break;
+          case 12:
+              miLista.BubbleSortString();
         }
-    }while(opc != 12);
+    }while(opc != 13);
     system(clear);
     return 0;
 }
