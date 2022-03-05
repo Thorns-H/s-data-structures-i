@@ -194,8 +194,6 @@ int main(){
             }
             system(pause);
             break;
-          case 12:
-              miLista.BubbleSortString();
         }
     }while(opc != 13);
     system(clear);
