@@ -7,4 +7,4 @@ en el [Centro Universitario de Ciencias Exactas e Ingenierías](http://www.cucei
 
 **ⓘ Aclaraciones:**
 
-Muchas gracias al [Noe Ortega Sanchez](http://www.cucei.udg.mx/maestrias/electronica/es/contenido/noe-ortega-sanchez) por impartir esta materia.
+Muchas gracias al profesor [Noe Ortega Sanchez](http://www.cucei.udg.mx/maestrias/electronica/es/contenido/noe-ortega-sanchez) por impartir esta materia.
